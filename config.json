@@ -1,0 +1,23 @@
+{
+    "path":
+    {
+        "adapters": "",
+        "genome": "data/references/genome.fasta",
+        "annotation_gtf": "data/references/annotation.gtf",
+        "chromosomes": "",
+        "bcl": "data/datasets/bcl",
+        "fastq": "data/datasets/fastq",
+        "qc": "data/qc",
+        "cutadapt": "data/datasets/cut",
+        "trimmed": "data/datasets/trimmed",
+        "STAR_ref": "data/references/STAR_genome",
+        "STAR_align": "data/datasets/STAR_aligned",
+        "sorted": "data/datasets/samtools_sort"
+    },
+    "download":
+    {
+        "chromosomes": "",
+        "annotation_ID": "",
+        "datasets": ["171129_NB502083_0005_AH5KG5BGX5", "171130_NB502083_0006_AH5JMVBGX5", "180202_NB502083_0012_AHWKYKBGX3"]
+    }
+}

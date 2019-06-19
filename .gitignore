@@ -1,0 +1,10 @@
+# Results and all data
+*.svg
+*.png
+data/*
+
+# Logs
+logs/*
+
+# Snakemake files
+.snakemake/
