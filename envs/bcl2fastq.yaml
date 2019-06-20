@@ -1,0 +1,4 @@
+channel:
+  -bioconda
+dependencies:
+  - bcl2fastq-nextseq ==1.2.4
