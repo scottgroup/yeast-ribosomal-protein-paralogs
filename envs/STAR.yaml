@@ -1,5 +1,6 @@
 channels:
+  - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - bcl2fastq-nextseq ==1.2.4
+  - star ==2.7.2b

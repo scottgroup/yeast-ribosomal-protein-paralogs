@@ -1,0 +1,5 @@
+channels:
+  - defaults
+  - bioconda
+dependencies:
+  - subread ==1.6.4
