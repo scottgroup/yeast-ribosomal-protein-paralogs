@@ -4,7 +4,7 @@ rule bcl2fastq:
     input:
         bcl = os.path.join(config['path']['bcl'],'{bcl_ID}')
     output:
-        fastq = os.path.join(config['path']['fastq'],'{bcl_ID}')
+        fastq = directory(os.path.join(config['path']['fastq'],'{bcl_ID}'))
     params:
         extra = '--no-lane-splitting'
     conda:
