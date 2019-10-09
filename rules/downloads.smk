@@ -10,26 +10,19 @@ rule download_chr:
         ' && gunzip {output.chromosomes}.gz'
 
 
-# rule download_git_projects:
-#     output:
-#         git_gtf_folder = directory('other_git_repos/annotation'),
-#         git_coco_folder = directory('other_git_repos/coco')
-#     params:
-#         git_gtf_link = os.path.join(
-#             'http://gitlabscottgroup.med.usherbrooke.ca',
-#             'gaspard/yeast_annotation.git'
-#         ),
-#         git_coco_link = os.path.join(
-#             'http://gitlabscottgroup.med.usherbrooke.ca',
-#             'scott-group/coco.git'
-#         )
-#     conda:
-#         '../envs/git.yaml'
-#     shell:
-#         'mkdir -p {output.git_gtf_folder}'
-#         ' && git clone {params.git_gtf_link} {output.git_gtf_folder}'
-#         ' && mkdir -p {output.git_coco_folder}'
-#         ' && git clone {params.git_coco_link} {output.git_coco_folder}'
+rule download_git_projects:
+    output:
+        git_gtf_folder = directory('other_git_repos/annotation')
+    params:
+        git_gtf_link = os.path.join(
+            'http://gitlabscottgroup.med.usherbrooke.ca',
+            'gaspard/yeast_annotation.git'
+        )
+    conda:
+        '../envs/git.yaml'
+    shell:
+        'mkdir -p {output.git_gtf_folder}'
+        ' && git clone {params.git_gtf_link} {output.git_gtf_folder}'
 
 
 # rule download_pairedBamToBed12:

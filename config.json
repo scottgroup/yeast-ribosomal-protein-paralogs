@@ -1,24 +1,46 @@
 {
     "path":
     {
-        "adapters": "",
+        "adapters": "adapters/Adapters-PE_NextSeq.fa",
         "genome": "data/references/genome.fasta",
-        "annotation_gtf": "data/references/annotation.gtf",
-        "chromosomes": "",
+        "gtf": "data/references/annotation.gtf",
+        "chromosomes": "data/references/chromosomes",
         "bcl": "data/datasets/bcl",
         "fastq": "data/datasets/fastq",
         "qc": "data/qc",
-        "cutadapt": "data/datasets/cut",
         "trimmed": "data/datasets/trimmed",
         "STAR_ref": "data/references/STAR_genome",
         "STAR_align": "data/datasets/STAR_aligned",
-        "sorted": "data/datasets/samtools_sort"
+        "counts": "data/datasets/counts"
     },
     "download":
     {
-        "chromosomes": "",
-        "annotation_ID": "",
+        "chromosomes": "ftp://ftp.ensembl.org/pub/release-97/fasta/saccharomyces_cerevisiae/dna/Saccharomyces_cerevisiae.R64-1-1.dna.chromosome.",
         "datasets_all": ["171129_NB502083_0005_AH5KG5BGX5", "171130_NB502083_0006_AH5JMVBGX5", "180202_NB502083_0012_AHWKYKBGX3"],
         "datasets": ["191004_NB502083_0068_AHH3KGBGX9"]
+    },
+    "bcl_datasets":
+    {
+        "191004_NB502083_0068_AHH3KGBGX9":
+        [
+          "WT1_TE_S1",
+          "WT1_LP_S2",
+          "WT1_HP_S3",
+          "WT2_TE_S4",
+          "WT2_LP_S5",
+          "WT2_HP_S6",
+          "PSSA1_TE_S7",
+          "PSSA1_LP_S8",
+          "PSSA1_HP_S9",
+          "PSSA2_TE_S10",
+          "PSSA2_LP_S11",
+          "PSSA2_HP_S12",
+          "PSSB1_TE_S13",
+          "PSSB1_LP_S14",
+          "PSSB1_HP_S15",
+          "PSSB2_TE_S16",
+          "PSSB2_LP_S17",
+          "PSSB2_HP_S18",
+        ]
     }
 }

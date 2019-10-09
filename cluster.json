@@ -2,11 +2,35 @@
     "__default__":
     {
         "job-name": "SM.{rule}",
-        "nodes": "1",
-        "cpus-per-task": "32",
-        "mem": "125G",
-        "time": "0-1:00:00",
+        "cpus-per-task": "1",
+        "mem-per-cpu": "4000M",
+        "time": "0-00:15:00",
         "mail-user": "gaspard.reulet@usherbrooke.ca",
         "mail-type": "FAIL"
+    },
+    "bcl2fastq":
+    {
+        "cpus-per-task": "16",
+        "time": "0-01:00:00"
+    },
+    "trimmomatic":
+    {
+        "cpus-per-task": "8",
+        "time": "0-02:00:00"
+    },
+    "STAR_generateGenome":
+    {
+        "cpus-per-task": "16",
+        "time": "0-01:00:00"
+    },
+    "STAR_align":
+    {
+        "cpus-per-task": "16",
+        "time": "0-00:30:00"
+    },
+    "featurecounts":
+    {
+        "cpus-per-task": "8",
+        "time": "0-01:00:00"
     }
 }

@@ -6,21 +6,21 @@ rule fastqc:
             "data/datasets",
             "{step}",
             QC_VERSION,
-            "{SRA_id}",
-            "{SRA_id}_{read}.fastq"
+            "{sample_ID}",
+            "{sample_ID}_{read}.fastq"
         )
     output:
         html = os.path.join(
             config["path"]["qc"],
             QC_VERSION,
-            "{SRA_id}",
+            "{sample_ID}",
             "{step}",
             "{read}_fastqc.html"
         ),
         zip = os.path.join(
             config["path"]["qc"],
             QC_VERSION,
-            "{SRA_id}",
+            "{sample_ID}",
             "{step}",
             "{read}_fastqc.zip"
         )

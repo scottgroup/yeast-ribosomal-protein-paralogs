@@ -2,22 +2,45 @@ import os
 
 rule trimmomatic:
     input:
-        input_r1 = '{ID}.R1.fastq.gz',
-        input_r2 = '{ID}.R2.fastq.gz'
+        r1 = os.path.join(
+            config['path']['fastq'],
+            '191004_NB502083_0068_AHH3KGBGX9',
+            '{sample_ID}_R1_001.fastq.gz'
+        ),
+        r2 = os.path.join(
+            config['path']['fastq'],
+            '191004_NB502083_0068_AHH3KGBGX9',
+            '{sample_ID}_R2_001.fastq.gz'
+        )
     output:
-        output_r1_paired = '{ID}_R1_paired.fq.gz',
-        output_r1_unpaired = '{ID}_R1_unpaired.fq.gz',
-        output_r2_paired = '{ID}_R2_paired.fq.gz',
-        output_r2_unpaired = '{ID}_R2_unpaired.fq.gz'
+        r1_paired = os.path.join(
+            config['path']['trimmed'],
+            '{sample_ID}_R1_paired.fq.gz'
+        ),
+        r1_unpaired = os.path.join(
+            config['path']['trimmed'],
+            '{sample_ID}_R1_unpaired.fq.gz'
+        ),
+        r2_paired = os.path.join(
+            config['path']['trimmed'],
+            '{sample_ID}_R2_paired.fq.gz'
+        ),
+        r2_unpaired = os.path.join(
+            config['path']['trimmed'],
+            '{sample_ID}_R2_unpaired.fq.gz'
+        )
+    params:
+        adapters = config['path']['adapters']
     threads:
+        8
     conda:
         '../envs/trimmomatic.yaml'
     log:
     shell:
         'trimmomatic PE -threads {threads}'
         ' -phred33'
-        ' {input_r1} {input_r2}'
-        ' {output_r1_paired} {output_r1_unpaired}'
-        ' {output_r2_paired} {output_r2_unpaired}'
-        ' ILLUMINACLIP:Adapters-PE_NextSeq.fa:2:12:10:8:true'
+        ' {input.r1} {input.r2}'
+        ' {output.r1_paired} {output.r1_unpaired}'
+        ' {output.r2_paired} {output.r2_unpaired}'
+        ' ILLUMINACLIP:{params.adapters}:2:12:10:8:true'
         ' TRAILING:30'

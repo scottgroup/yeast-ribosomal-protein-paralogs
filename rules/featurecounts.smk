@@ -6,10 +6,11 @@ rule feature_counts:
         gtf = rules.create_gtf.output.gtf,
         bam = rules.STAR_align.output.bam
     output:
-        csv = os.path.join(config['path']['counts'], '{ID}.tsv')
+        csv = os.path.join(config['path']['counts'], '{sample_ID}.tsv')
     conda:
         '../envs/subread.yaml'
     threads:
+        12
     log:
     shell:
         'featureCounts -T {threads}'
@@ -23,7 +24,7 @@ rule feature_counts:
         ' -g gene_id'
         ' -a {input.gtf}'
         ' -G {input.genome}'
-        ' -o {ouput.csv}'
+        ' -o {output.csv}'
         ' {input.bam}'
         # Rsubread featureCounts(Aligned.sortedByCoord.out.bam,
         # genome=Saccharomyces_cerevisiae.R64-1-1.dna.chromosome.all.fa,

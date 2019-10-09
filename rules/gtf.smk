@@ -18,7 +18,4 @@ rule create_gtf:
     conda:
         '../envs/pypackages.yaml'
     shell:
-        # 'mkdir -p {params.git_folder}'
-        # ' && git clone {params.link} {params.git_folder}'
-        # ' && python {params.git_folder}/make_gtf.py {output.gtf}'
         'python {input.path}/make_gtf.py {output.gtf}'

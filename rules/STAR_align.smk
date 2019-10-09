@@ -3,21 +3,21 @@ import os
 rule STAR_align:
     input:
         index = config['path']['STAR_ref'],
-        f1 = os.path.join(config['path']['raw'], '{ID}_R1_paired.fq.gz'),
-        f2 = os.path.join(config['path']['raw'], '{ID}_R2_paired.fq.gz')
+        f1 = rules.trimmomatic.output.r1_paired,
+        f2 = rules.trimmomatic.output.r2_paired
     output:
         bam = os.path.join(
             config['path']['STAR_align'],
-            '{ID}_Aligned.sortedByCoord.out.bam'
+            '{sample_ID}_Aligned.sortedByCoord.out.bam'
         )
     threads:
         16
     conda:
         '../envs/STAR.yaml'
     log:
-        'logs/STAR_align.{ID}.log'
+        'logs/STAR_align.{sample_ID}.log'
     params:
-        outFileNamePrefix = os.path.join(config['path']['STAR_align'], '{ID}_')
+        outFileNamePrefix = os.path.join(config['path']['STAR_align'], '{sample_ID}_')
     shell:
         'STAR'
         ' --runMode alignReads'
