@@ -1,10 +1,14 @@
 # Results and all data
 samples.txt
+*.txt
 *.svg
 *.png
 *.out
 data/*
 *.csv
+
+# Specific files
+select_genes.awk
 
 # Logs
 logs/*
@@ -14,6 +18,7 @@ logs/*
 
 # Other folders
 sequencing_Mustafa_sample_sheets/
+other_git_repos/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

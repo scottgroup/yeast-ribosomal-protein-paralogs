@@ -38,7 +38,7 @@ def dataframe(filename):
     # Each column is a list stored as a value in this dict.
     result = defaultdict(list)
 
-    number_of_lines = file_len(filename)
+    # number_of_lines = file_len(filename)
     for i, line in enumerate(lines(filename)):
         # progress = i*100/number_of_lines
         # sys.stdout.write("\r reading lines: %d %%" % progress)
@@ -53,7 +53,7 @@ def dataframe(filename):
         for key in result.keys():
             result[key].append(line.get(key, None))
 
-    sys.stdout.write("\n")
+    # sys.stdout.write("\n")
     return pd.DataFrame(result)
 
 def lines(filename):

@@ -6,8 +6,14 @@ rule STAR_align:
         f1 = rules.trimmomatic.output.r1_paired,
         f2 = rules.trimmomatic.output.r2_paired
     output:
+        # bam = os.path.join(
+        #     config['path']['STAR_align'],
+        #     '{bcl_ID}',
+        #     '{sample_ID}_Aligned.sortedByCoord.out.bam'
+        # )
         bam = os.path.join(
             config['path']['STAR_align'],
+            '{bcl_ID}',
             '{sample_ID}_Aligned.sortedByCoord.out.bam'
         )
     threads:
@@ -15,9 +21,19 @@ rule STAR_align:
     conda:
         '../envs/STAR.yaml'
     log:
-        'logs/STAR_align.{sample_ID}.log'
+        # 'logs/{bcl_ID}/STAR_align.{sample_ID}.log'
+        'logs/{bcl_ID}/STAR_align.{sample_ID}.log'
     params:
-        outFileNamePrefix = os.path.join(config['path']['STAR_align'], '{sample_ID}_')
+        # outFileNamePrefix = os.path.join(
+        #     config['path']['STAR_align'],
+        #     '{bcl_ID}'
+        #     '{sample_ID}_'
+        # )
+        outFileNamePrefix = os.path.join(
+            config['path']['STAR_align'],
+            '{bcl_ID}',
+            '{sample_ID}_'
+        )
     shell:
         'STAR'
         ' --runMode alignReads'

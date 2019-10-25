@@ -1,33 +1,24 @@
 import os
 
-import scripts.get_output as get_output
 
-rule bcl2fastq:
+checkpoint bcl2fastq:
     input:
         bcl = os.path.join(
             config['path']['bcl'],
-            '191004_NB502083_0068_AHH3KGBGX9'
+            '{bcl_ID}'
         )
     output:
-        fastq = expand(
-            os.path.join(
-                config['path']['fastq'],
-                '191004_NB502083_0068_AHH3KGBGX9',
-                '{sample_ID}_{pair}_001.fastq.gz'
-            ),
-            sample_ID = config['bcl_datasets']['191004_NB502083_0068_AHH3KGBGX9'],
-            pair = ['R1', 'R2']
-        )
+        fastq = directory(os.path.join(config['path']['fastq'], '{bcl_ID}'))
     params:
         extra = '--no-lane-splitting',
         output_dir = os.path.join(
             config['path']['fastq'],
-            '191004_NB502083_0068_AHH3KGBGX9'
+            '{bcl_ID}'
         )
     conda:
         '../envs/bcl2fastq.yaml'
     log:
-        'logs/bcl2fastq/191004_NB502083_0068_AHH3KGBGX9.log'
+        'logs/bcl2fastq/{bcl_ID}.log'
     threads:
         24
     shell:

@@ -6,9 +6,12 @@ rule feature_counts:
         gtf = rules.create_gtf.output.gtf,
         bam = rules.STAR_align.output.bam
     output:
-        csv = os.path.join(config['path']['counts'], '{sample_ID}.tsv')
+        tsv = os.path.join(config['path']['counts'], '{sample_ID}.tsv')
+    params:
+        script = '../scripts/count_to_cpm_tpm_v2.py',
+        temp_tsv = os.path.join(config['path']['counts'], 'temp_{sample_ID}.tsv')
     conda:
-        '../envs/subread.yaml'
+        '../envs/featurecounts.yaml'
     threads:
         12
     log:
@@ -24,8 +27,18 @@ rule feature_counts:
         ' -g gene_id'
         ' -a {input.gtf}'
         ' -G {input.genome}'
-        ' -o {output.csv}'
+        ' -o {params.temp_tsv}'
         ' {input.bam}'
+        ' && MEAN_FRAGMENT_LENGTH=`'  # Mean fragment length of file
+            'samtools view {input.bam}'
+            " | awk 'function abs(v){{return v<0 ? -v:v}}{{total+=abs($9)}} END{{print total/NR}}'"
+        '`'
+        ' && tail -n +2 {params.temp_tsv}'
+        ' | python3 {params.script} - {input.gtf} $MEAN_FRAGMENT_LENGTH'
+        ' > {output.tsv}'
+        ' && rm {params.temp_tsv}'
+
+
         # Rsubread featureCounts(Aligned.sortedByCoord.out.bam,
         # genome=Saccharomyces_cerevisiae.R64-1-1.dna.chromosome.all.fa,
         # annot.ext=Saccharomyces_cerevisiae.R64-1-1.90.gtf,

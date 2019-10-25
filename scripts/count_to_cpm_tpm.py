@@ -76,16 +76,14 @@ if __name__ in '__main__':
     input = os.path.realpath(input)
     files = [entry.name for entry in os.scandir(input) if entry.name.endswith('.tsv') and entry.is_file()]
     # print(files)
-    files = [f'{input}/{file}' for file in files]
-    # print(files)
-    print(len(files))
+    files = [os.path.join(input, file) for file in files]
 
     output = args.output
     if output == 'None':
         output = input
     output = os.path.realpath(output)
     os.makedirs(output,exist_ok=True)
-    output = f'{output}/CPM.csv'
+    output = f'{output}/CPM_TPM.csv'
     print(output)
 
     # gtf = '/home/gaspard/Documents/Projects/snakemake_mustafa/data/references/Saccharomyces_cerevisiae.R64-1-1.96.gtf'
