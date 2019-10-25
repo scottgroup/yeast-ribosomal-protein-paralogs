@@ -13,7 +13,6 @@ pd.set_option("display.max_colwidth", 100000)
 def main(gene_ids, gtf):
     gtf_df = utils.get_gtf(gtf)
     gtf_df = gtf_df.loc[gtf_df.gene_id.isin(gene_ids)]
-    gtf_df = gtf_df.loc[gtf_df.gene_biotype=='ORF']
     gtf_df = utils.build_features_gtf(gtf_df)
     return gtf_df
 

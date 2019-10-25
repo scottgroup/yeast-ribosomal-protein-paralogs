@@ -168,11 +168,6 @@ def df_to_stdin(df, header=False, encode=False):
     return df
 
 
-def get_effective_length(length, mean_FL):
-    effective_length = length - mean_FL + 1
-    return effective_length
-
-
 def get_gtf(gtf_file):
     gtf_df = dataframe(gtf_file)
     gtf_df['start'] = gtf_df['start'].map(int)
@@ -183,13 +178,3 @@ def get_gtf(gtf_file):
     gtf_df.loc[gtf_df["gene_name"].isnull(
     ), 'gene_name'] = gtf_df.loc[gtf_df["gene_name"].isnull(), 'gene_id']
     return gtf_df
-
-
-def get_mean_FL(file):
-    """
-    Gets mean fragment length from bam
-    """
-    read_bam = ('samtools','view', bam_file)
-    select_col = ('cut','-f','9')
-    c1 = subprocess.Popen(read_bam, stdout=subprocess.PIPE)
-    c2 = subprocess.Popen(select_col, stdin=c1.stdout, stdout=subprocess.PIPE)
