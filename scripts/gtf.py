@@ -24,14 +24,6 @@ R_COMMA     = re.compile(r'\s*,\s*')
 R_KEYVALUE  = re.compile(r'(\s+|\s*=\s*)')
 
 
-def file_len(filename):
-    with open(filename) as f:
-        for i, l in enumerate(f):
-            pass
-    f.close()
-    return i + 1
-
-
 def dataframe(filename):
     """Open an optionally gzipped GTF file and return a pandas.DataFrame.
     """
