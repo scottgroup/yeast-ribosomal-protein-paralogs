@@ -19,7 +19,7 @@ def main(input_dir):
             entry.name.split('.')[0]
         )
         for entry in os.scandir(input_dir)
-        if entry.is_file()
+        if entry.is_file() and entry.name.endswith('.tsv')
     ]
 
     ref_df = files_df[0][0]
@@ -28,6 +28,7 @@ def main(input_dir):
 
     for i, file in enumerate(files_df):
         df, name = file
+        df.columns = map(str.lower, df.columns)
         cpm_df[name] = cpm_df.gene_id.map(dict(zip(df.gene_id, df.cpm)))
         tpm_df[name] = cpm_df.gene_id.map(dict(zip(df.gene_id, df.tpm)))
 
@@ -37,8 +38,8 @@ def main(input_dir):
 if __name__ in "__main__":
     input_dir = sys.argv[1]
     out_dir = sys.argv[2]
-    cpm_out = os.path.join(out_dir, 'CPM_all.csv')
-    tpm_out = os.path.join(out_dir, 'TPM_all.csv')
+    cpm_out = os.path.join(out_dir, 'CPM_all.tsv')
+    tpm_out = os.path.join(out_dir, 'TPM_all.tsv')
     cpm_df, tpm_df = main(input_dir)
-    cpm_df.to_csv(cpm_out, sep='\t',header=True,index=False)
-    tpm_df.to_csv(tpm_out, sep='\t',header=True,index=False)
+    cpm_df.to_csv(cpm_out, sep='\t', header=True, index=False)
+    tpm_df.to_csv(tpm_out, sep='\t', header=True, index=False)
