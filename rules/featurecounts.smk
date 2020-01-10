@@ -3,13 +3,22 @@ import os
 rule feature_counts:
     input:
         genome = rules.merge_chromosomes.output.genome,
-        gtf = rules.create_gtf.output.gtf,
+        gtf = os.path.join(config['path']['gtf'], '{annotation}.gtf'),
         bam = rules.STAR_align.output.bam
     output:
-        tsv = os.path.join(config['path']['counts'], '{sample_ID}.tsv')
+        tsv = os.path.join(
+            config['path']['counts'],
+            '{annotation}',
+            '{sample_ID}.tsv'
+        )
     params:
-        script = '../scripts/count_to_cpm_tpm_v2.py',
-        temp_tsv = os.path.join(config['path']['counts'], 'temp_{sample_ID}.tsv')
+        script = '../scripts/count_to_cpm_tpm_v3.py',
+        temp_tsv = os.path.join(
+            config['path']['counts'],
+            '{annotation}',
+            'temp_{sample_ID}.tsv'
+        ),
+        max_read_size = '75'
     conda:
         '../envs/featurecounts.yaml'
     threads:
@@ -29,12 +38,8 @@ rule feature_counts:
         ' -G {input.genome}'
         ' -o {params.temp_tsv}'
         ' {input.bam}'
-        ' && MEAN_FRAGMENT_LENGTH=`'  # Mean fragment length of file
-            'samtools view {input.bam}'
-            " | awk 'function abs(v){{return v<0 ? -v:v}}{{total+=abs($9)}} END{{print total/NR}}'"
-        '`'
         ' && tail -n +2 {params.temp_tsv}'
-        ' | python3 {params.script} - {input.gtf} $MEAN_FRAGMENT_LENGTH'
+        ' | python3 {params.script} - {input.gtf} {params.max_read_size}'
         ' > {output.tsv}'
         ' && rm {params.temp_tsv}'
 
