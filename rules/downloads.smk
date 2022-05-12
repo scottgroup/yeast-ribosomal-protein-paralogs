@@ -12,7 +12,7 @@ rule download_chr:
 
 rule download_ensembl_gtf:
     output:
-        gtf = os.path.join(config['path']['gtf'], 'ensembl.gtf')
+        gtf = config['path']['gtf']
     params:
         link = ''.join(config['download']['gtf'])
     shell:
