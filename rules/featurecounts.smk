@@ -12,7 +12,7 @@ rule feature_counts:
             '{sample_ID}.tsv'
         )
     params:
-        script = '../scripts/count_to_cpm_tpm_v3.py',
+        script = 'scripts/count_to_cpm_tpm.py',
         temp_tsv = os.path.join(
             config['path']['counts'],
             '{annotation}',
@@ -30,7 +30,7 @@ rule feature_counts:
         ' -p'                   # Is paired end
         ' -B'                   # Only count read pairs with both ends aligned
         ' -C'                   # Chimeric fragments NOT counted
-        ' -s 2'                 # Strand specific read counting 2 = reversely stranded???
+        ' -s 2'                 # Strand specific read counting 2 = reversely stranded
         ' -F GTF'
         ' -t exon'
         ' -g gene_id'
@@ -42,24 +42,3 @@ rule feature_counts:
         ' | python3 {params.script} - {input.gtf} {params.max_read_size}'
         ' > {output.tsv}'
         ' && rm {params.temp_tsv}'
-
-
-        # Rsubread featureCounts(Aligned.sortedByCoord.out.bam,
-        # genome=Saccharomyces_cerevisiae.R64-1-1.dna.chromosome.all.fa,
-        # annot.ext=Saccharomyces_cerevisiae.R64-1-1.90.gtf,
-        # isGTFAnnotationFile=TRUE,
-        # GTF.featureType="exon",
-        # GTF.attrType="gene_id",
-        # countChimericFragments=FALSE,
-        # largestOverlap=FALSE,
-        # isPairedEnd=TRUE,
-        # useMetaFeatures=TRUE,
-        # requireBothEndsMapped=TRUE,
-        # strandSpecific=2,
-        # minOverlap=10,
-        # autosort=TRUE,
-        # allowMultiOverlap=FALSE,
-        # reportReads=TRUE,
-        # juncCounts=FALSE,
-        # fraction=FALSE,
-        # countMultiMappingReads=FALSE)
