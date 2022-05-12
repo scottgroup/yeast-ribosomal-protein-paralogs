@@ -10,4 +10,4 @@ rule merge_all_samples:
         cpm = os.path.join(config['path']['counts'], 'CPM_all.tsv'),
         tpm = os.path.join(config['path']['counts'], 'TPM_all.tsv')
     script:
-        'scripts/combine_files.py'
+        '../scripts/combine_files.py'
