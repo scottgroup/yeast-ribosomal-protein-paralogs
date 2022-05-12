@@ -1,9 +1,5 @@
 import os
 
-from functools import partial
-
-import scripts.get_output as get_output
-
 configfile: 'config.json'
 
 
@@ -20,28 +16,12 @@ include: 'rules/STAR_align.smk'
 include: 'rules/featurecounts.smk'
 include: 'rules/merge_all_samples.smk'
 
-annotations = ['ensembl', 'ensemblUTR']
-
 wildcard_constraints:
-    sample_ID = "[A-Z0-9_]+"
+    sample_ID = "({})".format("|".join(config["datasets"]))
 
 rule all:
     input:
-        csv = expand(
-            os.path.join(
-                config['path']['counts'],
-                '{annotation}',
-                '{sample_ID}.tsv'
-            ),
-            annotation=annotations,
-            sample_ID = config['datasets']
-        ),
         all_counts = expand(
-            os.path.join(
-                config['path']['counts'],
-                '{annotation}',
-                '{PM}_all.tsv'
-            ),
-            annotation=annotations,
+            os.path.join(config['path']['counts'], '{PM}_all.tsv'),
             PM=['CPM', 'TPM']
         )
