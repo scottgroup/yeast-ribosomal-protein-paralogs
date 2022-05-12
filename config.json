@@ -3,17 +3,13 @@
     {
         "adapters": "adapters/Adapters-PE_NextSeq.fa",
         "genome": "data/references/genome.fasta",
-        "gtf": "data/references/gtf",
+        "gtf": "data/references/annotation.gtf",
         "chromosomes": "data/references/chromosomes",
-        "bcl": "data/datasets/bcl",
         "fastq": "data/datasets/fastq",
-        "qc": "data/qc",
         "trimmed": "data/datasets/trimmed",
         "STAR_ref": "data/references/STAR_genome",
         "STAR_align": "data/datasets/STAR_aligned",
-        "counts": "data/datasets/counts",
-        "coco_ca": "data/references/annontation.corrected.gtf",
-        "coco_cc": "data/datasets/coco_cc"
+        "counts": "data/datasets/counts"
     },
     "download":
     {
