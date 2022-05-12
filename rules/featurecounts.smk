@@ -36,4 +36,4 @@ rule feature_counts:
         ' && tail -n +2 {params.temp_tsv}'
         ' | python3 {params.script} - {input.gtf} {params.max_read_size}'
         ' > {output.tsv}'
-        ' && rm {params.temp_tsv}'
+        ' && rm {params.temp_tsv} {params.temp_tsv}.summary'
