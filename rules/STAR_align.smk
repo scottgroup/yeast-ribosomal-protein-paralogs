@@ -2,13 +2,12 @@ import os
 
 rule STAR_align:
     input:
-        index = os.path.join(config['path']['STAR_ref'], '{annotation}.gtf'),
+        index = os.path.join(config['path']['STAR_ref']),
         f1 = rules.trimmomatic.output.r1_paired,
         f2 = rules.trimmomatic.output.r2_paired
     output:
         bam = os.path.join(
             config['path']['STAR_align'],
-            '{annotation}',
             '{sample_ID}_Aligned.sortedByCoord.out.bam'
         )
     threads:
@@ -16,11 +15,10 @@ rule STAR_align:
     conda:
         '../envs/STAR.yaml'
     log:
-        'logs/STAR_align.{annotation}.{sample_ID}.log'
+        'logs/STAR_align.{sample_ID}.log'
     params:
         outFileNamePrefix = os.path.join(
             config['path']['STAR_align'],
-            '{annotation}',
             '{sample_ID}_'
         )
     shell:

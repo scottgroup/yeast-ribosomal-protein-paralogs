@@ -1,15 +1,17 @@
+import os
+
 rule STAR_generateGenome:
     input:
         genome = rules.merge_chromosomes.output.genome,
-        gtf = os.path.join(config['path']['gtf'], '{annotation}.gtf')
+        gtf = config['path']['gtf']
     output:
-        directory(os.path.join(config['path']['STAR_ref'], '{annotation}.gtf'))
+        directory(os.path.join(config['path']['STAR_ref']))
     threads:
         16
     conda:
         '../envs/STAR.yaml'
     log:
-        'logs/STAR_generateGenome.{annotation}.log'
+        'logs/STAR_generateGenome.log'
     shell:
         'mkdir {output}'
         ' && STAR'

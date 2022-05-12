@@ -3,19 +3,14 @@ import os
 rule feature_counts:
     input:
         genome = rules.merge_chromosomes.output.genome,
-        gtf = os.path.join(config['path']['gtf'], '{annotation}.gtf'),
+        gtf = config['path']['gtf'],
         bam = rules.STAR_align.output.bam
     output:
-        tsv = os.path.join(
-            config['path']['counts'],
-            '{annotation}',
-            '{sample_ID}.tsv'
-        )
+        tsv = os.path.join(config['path']['counts'], '{sample_ID}.tsv')
     params:
         script = 'scripts/count_to_cpm_tpm.py',
         temp_tsv = os.path.join(
             config['path']['counts'],
-            '{annotation}',
             'temp_{sample_ID}.tsv'
         ),
         max_read_size = '75'
