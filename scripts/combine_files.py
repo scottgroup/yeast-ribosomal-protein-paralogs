@@ -1,25 +1,20 @@
 #!/usr/bin/env python3
 
-import os
 import pandas as pd
-import sys
 
 
-def main(input_dir):
+def main(input, cpm_out, tpm_out):
     files_df = [
         (
             pd.read_csv(
-                entry.path,
+                file,
                 sep='\t',
                 header=0,
-                # header=None,
-                index_col=False,
-                # names=['gene_id', 'gene_name', 'gene_biotype', 'length', 'counts', 'cpm', 'tpm']
+                index_col=False
             ),
-            entry.name.split('.')[0]
+            file.split('/')[-1].split('.')[-2]
         )
-        for entry in os.scandir(input_dir)
-        if entry.is_file() and entry.name.endswith('.tsv')
+        for file in input
     ]
 
     ref_df = files_df[0][0]
@@ -30,16 +25,10 @@ def main(input_dir):
         df, name = file
         df.columns = map(str.lower, df.columns)
         cpm_df[name] = cpm_df.gene_id.map(dict(zip(df.gene_id, df.cpm)))
-        tpm_df[name] = cpm_df.gene_id.map(dict(zip(df.gene_id, df.tpm)))
+        tpm_df[name] = tpm_df.gene_id.map(dict(zip(df.gene_id, df.tpm)))
 
-    return cpm_df, tpm_df
-
-
-if __name__ in "__main__":
-    input_dir = sys.argv[1]
-    out_dir = sys.argv[2]
-    cpm_out = os.path.join(out_dir, 'CPM_all.tsv')
-    tpm_out = os.path.join(out_dir, 'TPM_all.tsv')
-    cpm_df, tpm_df = main(input_dir)
     cpm_df.to_csv(cpm_out, sep='\t', header=True, index=False)
     tpm_df.to_csv(tpm_out, sep='\t', header=True, index=False)
+
+
+main(snakemake.input.counts, snakemake.output.cpm, snakemake.output.tpm)
